@@ -4,47 +4,40 @@ using namespace std;
 class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums) {
+        
         vector<int> res;
-
-        for( int i = 1 ; i < nums.size() ; i ++ ){
-            cout << binary_search(nums, i, nums.size()-1, nums[i-1]) << endl;
-            // if( binary_search(nums, i, nums.size()-1, nums[i-1]) == -1)
-            //     res.push_back(nums[i-1]);
+        map<int, int> myMap;
+        for(int i = 0 ; i < nums.size() ; i ++){
+            myMap[nums[i]] ++;
+            
+            map<int, int>::iterator iter;
+            for( iter = myMap.begin() ; iter != myMap.end() ; iter ++ )
+                if( iter->second == 2 )
+                    myMap.erase(iter);
         }
 
+        assert(myMap.size() == 2);
+        map<int, int>::iterator iter;
+        for( iter = myMap.begin() ; iter != myMap.end() ; iter ++)
+            res.push_back(iter->first);
+        
         return res;
     }
 
-private:
-    // 从nums[left... right]区间内寻找target
-    int binary_search(vector<int>& nums, int left, int right, int target){
-        int l = left;
-        int r = right;
-        while (l <= r)
-        {
-            int mid = l + (r-l)/2;
-            if ( nums[mid] == target )
-                return mid;
-            else if (nums[mid] > target)
-                r = mid-1;
-            else
-                l = mid+1;
-        }
-        return -1;
-    }
 };
 
-void printVector(const vector<int>& nums){
-    for(int i = 0 ; i < nums.size() ; i ++)
-        cout << nums[i] << " ";
-    cout << endl;
+void printVector(int val){
+    cout << val << " ";
 }
 
 int main(){
     
-    int nums[] = {1,2,1,3,2,5};
+    // int nums[] = {1,2,1,3,2,5};
+    int nums[] = {1,0};
     int n = sizeof(nums)/sizeof(int);
     vector<int> vec( nums, nums+n );
-    printVector( Solution().singleNumber(vec) );
+    vector<int> res = Solution().singleNumber(vec);
+    for_each(res.begin(), res.end(), printVector);
+
     return 0;
 }
