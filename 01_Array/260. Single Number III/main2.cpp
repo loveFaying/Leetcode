@@ -3,26 +3,24 @@ using namespace std;
 
 
 // https://leetcode-cn.com/problems/single-number-iii/
+// Time: O(n)
+// Space: O(n)
 class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums) {
         
         vector<int> res;
-        map<int, int> myMap;
-        for(int i = 0 ; i < nums.size() ; i ++){
-            myMap[nums[i]] ++;
-            
-            map<int, int>::iterator iter;
-            for( iter = myMap.begin() ; iter != myMap.end() ; iter ++ )
-                if( iter->second == 2 )
-                    myMap.erase(iter);
+        unordered_map<int, int> myMap;
+        for (int num: nums) {
+            myMap[num]++;
         }
-
-        assert(myMap.size() == 2);
-        map<int, int>::iterator iter;
-        for( iter = myMap.begin() ; iter != myMap.end() ; iter ++)
-            res.push_back(iter->first);
-        
+    
+        for (const auto& val: myMap) {
+            if (val.second == 1) {
+                res.push_back(val.first);
+            }
+        }
+                                         
         return res;
     }
 
