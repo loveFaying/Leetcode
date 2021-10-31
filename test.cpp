@@ -7,6 +7,11 @@ void MyPrint(int val){
 
 int main(){
 
-    cout << (5 & (-5)) << endl;
+    vector<string> vec{"houyw", "houyw2", "houyw3"};
+    for(auto v : vec)
+        cout << v << " ";
+    cout << endl;
+
+
     return 0;
 }
